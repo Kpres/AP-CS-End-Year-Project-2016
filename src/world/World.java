@@ -4,6 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.lwjgl.util.vector.Vector2f;
+import org.lwjgl.util.vector.Vector3f;
+
+import shaders.StaticShader;
+import entities.Entity;
+import models.ResourceModels;
+import render.Renderer;
 
 public class World {
     
@@ -14,21 +20,30 @@ public class World {
     private static final double[] yPositions = new double[numResources(rings)];
     
     List<Resource> resources;
+    List<Entity> entities;
     PieceManager pieceManager;
     
     public World() {
+    	setPositions();
+    	
     	resources = new ArrayList<Resource>();
+    	entities = new ArrayList<Entity>();
         pieceManager = new PieceManager();
+        
+        shuffleResources();
     }
     
     public World(List<Resource> resources) {
     	setPositions();
     	
         this.resources = resources;
+        entities = new ArrayList<Entity>();
         pieceManager = new PieceManager();
+        
+        shuffleResources();
     }
     
-    public static void setPositions() {
+    private static void setPositions() {
     	double x = 0;
     	double y = -rings * 2 * RADIUS;
         
@@ -80,6 +95,19 @@ public class World {
     	return pos;
     }
      
+    public void shuffleResources() {
+    	for (int i = 0; i < resources.size(); i++) {
+    		int random = (int) (Math.random() * (resources.size() - i)) + i;
+    		resources.add(i, resources.remove(random));
+    	}
+    	
+    	entities.clear();
+    	for (int i = 0; i < resources.size(); i++) {
+    		Vector2f pos = World.getPosition(i);
+			entities.add(new Entity(ResourceModels.getModel(resources.get(i).getId()), new Vector3f(pos.x, 0, pos.y), 0, 0, 0, 1));
+    	}
+    }
+
     public static int numResources(int rings) {
         int sum = 1;
          
@@ -102,10 +130,7 @@ public class World {
         return resources.remove(index);
     }
     
-    public void shuffleResources() {
-        for (int i = 0; i < resources.size(); i++) {
-            int random = (int) (Math.random() * (resources.size() - i)) + i;
-            resources.add(i, resources.remove(random));
-        }
+    public void render(Renderer renderer, StaticShader shader) {
+    	for (Entity e : entities) renderer.render(e, shader);
     }
 }

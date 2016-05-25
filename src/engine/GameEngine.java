@@ -9,11 +9,12 @@ import entities.Camera;
 import models.RawModel;
 import models.ResourceModels;
 import models.TexturedModel;
+import render.Loader;
 import render.OBJLoader;
 import render.Renderer;
 import render.Window;
 import shaders.StaticShader;
-import render.Loader;
+import input.MousePicker;
 import textures.ModelTexture;
 import world.Brick;
 import world.Desert;
@@ -31,6 +32,7 @@ public class GameEngine {
 	Loader loader;
 	
 	Camera camera;
+	MousePicker mousePicker;
 	World world;
 	
 	public GameEngine()
@@ -42,6 +44,7 @@ public class GameEngine {
 		
 		//Cameras
 		camera = new Camera();
+		mousePicker = new MousePicker(camera, renderer.getProjectionMatrix());
 		
 		RawModel woodHex = OBJLoader.loadObjModel("hex", loader);
 		RawModel wheatHex = OBJLoader.loadObjModel("hex", loader);
@@ -96,9 +99,11 @@ public class GameEngine {
 		while(!Display.isCloseRequested()){	
 			
 			renderer.prepare();
-
+			
 			camera.move();
 			shader.loadViewMatrix(camera);	
+			mousePicker.update();
+			Display.setTitle(mousePicker.getRay() + "");
 			
 			world.render(renderer, shader);
 			

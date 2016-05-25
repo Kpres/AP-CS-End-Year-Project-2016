@@ -8,8 +8,8 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.PixelFormat;
 
 public class Window {
-	private static final int WIDTH = 1980;
-	private static final int HEIGHT = 1020;
+	private static final int WIDTH = 1920;
+	private static final int HEIGHT = 1080;
 	private static final int MAX_FPS = 120;
 	
 	

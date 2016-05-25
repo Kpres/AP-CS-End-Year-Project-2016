@@ -1,8 +1,15 @@
 package render;
 
+import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL13.*;
+import static org.lwjgl.opengl.GL15.*;
+import static org.lwjgl.opengl.GL20.*;
+import static org.lwjgl.opengl.GL30.*;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 import java.util.ArrayList;
@@ -10,6 +17,7 @@ import java.util.List;
 
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL13;
 import org.lwjgl.opengl.GL15;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
@@ -49,6 +57,38 @@ public class Loader {
 		int textureID = texture.getTextureID();
 		textures.add(textureID);
 		return textureID;
+	}
+
+	public int loadCubeMap(List<String> faces) throws FileNotFoundException, IOException {
+		int textureId = glGenTextures();
+		glActiveTexture(GL_TEXTURE0);
+		
+		int width, height;
+		Texture image;
+		
+		glBindTexture(GL_TEXTURE_CUBE_MAP, textureId);
+		
+		
+		for (int i = 0; i < faces.size(); i++) {
+			image = TextureLoader.getTexture("PNG", new FileInputStream("res/"+faces.get(i)+".png"));
+			width = image.getImageWidth();
+			height = image.getImageHeight();
+			ByteBuffer bytes = BufferUtils.createByteBuffer(image.getTextureData().length);
+			bytes.put(image.getTextureData());
+			bytes.flip();
+			glTexImage2D(
+					GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0,
+					GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, bytes
+			);
+		}
+		
+		glTexParameter(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameter(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameter(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameter(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameter(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		
+		return textureId;
 	}
 	
 	public void cleanUp()

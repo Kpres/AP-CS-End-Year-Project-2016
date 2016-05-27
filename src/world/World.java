@@ -9,9 +9,12 @@ import org.lwjgl.util.vector.Vector3f;
 
 import engine.GameEngine;
 import entities.Camera;
+import entities.City;
 import entities.Entity;
+import entities.Resource;
+import entities.Road;
 import input.MousePicker;
-import models.ResourceModels;
+import models.ModelAssets;
 import render.Renderer;
 import shaders.StaticShader;
 
@@ -123,7 +126,7 @@ public class World {
     	entities.clear();
     	for (int i = 0; i < resources.size(); i++) {
     		Vector2f pos = World.getPosition(i);
-			entities.add(new Entity(ResourceModels.getModel(resources.get(i).getId()), new Vector3f(pos.x, 0, pos.y), 0, 0, 0, 1));
+			entities.add(new Entity(ModelAssets.getModel(resources.get(i).getId()), new Vector3f(pos.x, 0, pos.y), 0, 0, 0, 1));
     	}
     }
     
@@ -136,12 +139,12 @@ public class World {
     		City city = new City();
     		
     		road.setPos(new Vector3f(x, 0, z));
-    		z-=2;
+    		z--;
     		settlement.setPos(new Vector3f(x, 0, z));
-    		z-=2;
+    		z--;
     		city.setPos(new Vector3f(x, 0, z));
-    		z-=2;
-    		x+=2;
+    		z--;
+    		x++;
     		
 	    	pieceManager.addPiece(road);
 	    	pieceManager.addPiece(settlement);

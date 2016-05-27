@@ -1,6 +1,6 @@
 package world;
 
-import render.Renderer;
+import entities.GamePiece;
 
 public class Settlement extends GamePiece {
 	

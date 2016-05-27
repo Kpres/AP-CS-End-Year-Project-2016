@@ -48,17 +48,4 @@ public class MousePicker {
 		normalized.normalise(null);
 		return normalized;
 	}
-	
-	public static boolean checkHit(Vector3f objectPos, float radius, Vector3f rayNormal, Vector3f cameraPos) {
-		Vector3f dif = Vector3f.sub(cameraPos, objectPos, null);
-    	float b = Vector3f.dot(rayNormal, dif);
-    	float test = rayNormal.x * dif.x + rayNormal.y * dif.y + rayNormal.z * dif.z;
-    	float c = Vector3f.dot(dif, dif) - radius * radius;
-    	
-    	System.out.println(test + "\t" + b + "\t" + c + "\t" + (-b * b + c));
-    	if (- b * b + c >= 0)
-    		return true;
-    	else
-    		return false;
-	}
 }

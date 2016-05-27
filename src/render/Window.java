@@ -8,6 +8,7 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.PixelFormat;
 
 public class Window {
+	
 	private static final int WIDTH = 1920;
 	private static final int HEIGHT = 1080;
 	private static final int MAX_FPS = 120;
@@ -23,7 +24,6 @@ public class Window {
 			Display.setDisplayMode(new DisplayMode(WIDTH,HEIGHT));
 			Display.create(new PixelFormat(), attribs);
 		} catch (LWJGLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

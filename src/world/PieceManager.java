@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.lwjgl.input.Mouse;
-import org.lwjgl.util.vector.Vector;
 import org.lwjgl.util.vector.Vector3f;
 
 import entities.Camera;
 import entities.Entity;
+import entities.GamePiece;
 import input.MousePicker;
-import models.ResourceModels;
+import models.ModelAssets;
 import render.Renderer;
 import shaders.StaticShader;
 
@@ -28,19 +28,19 @@ public class PieceManager {
     
     public void addPiece(GamePiece piece) {
     	pieces.add(piece);
-    	entities.add(new Entity(ResourceModels.getModel(ResourceModels.ROAD_MODEL), piece.getPosition(), piece.getPitch(), piece.getYaw(), piece.getRoll(), 1));
+    	entities.add(new Entity(ModelAssets.getModel(ModelAssets.ROAD_MODEL), piece.getPosition(), piece.getPitch(), piece.getYaw(), piece.getRoll(), 1));
     }
     
     public void update(MousePicker mousePicker, Camera camera) {
     	entities.clear();
     	for (GamePiece p : pieces) {
     		p.update();
-    		entities.add(new Entity(ResourceModels.getModel(p.getId()), p.getPosition(), p.getPitch(), p.getYaw(), p.getRoll(), 1));
+    		entities.add(new Entity(ModelAssets.getModel(p.getId()), p.getPosition(), p.getPitch(), p.getYaw(), p.getRoll(), 1));
     		
     		Vector3f ray = mousePicker.getRay();
     		Vector3f cameraPos = camera.position.negate(null);
     		float t = -cameraPos.y/ray.y;
-    		Vector3f objPos = p.position;
+    		Vector3f objPos = p.getPosition();
     		Vector3f hitPos = Vector3f.add(cameraPos, new Vector3f(ray.x * t, ray.y * t, ray.z * t), null);
     		float hitRadius = 1.0f;
 

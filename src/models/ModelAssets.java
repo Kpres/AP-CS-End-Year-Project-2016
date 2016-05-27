@@ -2,10 +2,9 @@ package models;
 
 import render.Loader;
 import render.OBJLoader;
-import world.Resource;
 import textures.ModelTexture;
 
-public class ResourceModels {
+public class ModelAssets {
 	
 	private static TexturedModel[] resourceModels;
 	
@@ -20,15 +19,15 @@ public class ResourceModels {
 	public static final int CITY_MODEL = 8;
 	
 	public static void createModels(Loader loader) {
-		RawModel woodHex = OBJLoader.loadObjModel("hex", loader);
-		RawModel wheatHex = OBJLoader.loadObjModel("hex", loader);
-		RawModel brickHex = OBJLoader.loadObjModel("hex", loader);
-		RawModel sheepHex = OBJLoader.loadObjModel("hex", loader);
-		RawModel rockHex = OBJLoader.loadObjModel("hex", loader);
-		RawModel desertHex = OBJLoader.loadObjModel("hex", loader);
+		RawModel woodHex = OBJLoader.loadObjModel("wood", loader);
+		RawModel wheatHex = OBJLoader.loadObjModel("wheat", loader);
+		RawModel brickHex = OBJLoader.loadObjModel("clay", loader);
+		RawModel sheepHex = OBJLoader.loadObjModel("sheep", loader);
+		RawModel rockHex = OBJLoader.loadObjModel("mountain", loader);
+		RawModel desertHex = OBJLoader.loadObjModel("desert", loader);
 		RawModel road = OBJLoader.loadObjModel("road", loader);
-		RawModel village = OBJLoader.loadObjModel("hex", loader);
-		RawModel city = OBJLoader.loadObjModel("hex", loader);
+		RawModel village = OBJLoader.loadObjModel("village", loader);
+		RawModel city = OBJLoader.loadObjModel("city", loader);
 		
 		TexturedModel[] models = {
 				new TexturedModel (woodHex, new ModelTexture(loader.loadTexture("Wood"))),
@@ -37,9 +36,9 @@ public class ResourceModels {
 				new TexturedModel (sheepHex, new ModelTexture(loader.loadTexture("Sheep"))),
 				new TexturedModel (rockHex, new ModelTexture(loader.loadTexture("Rock"))),
 				new TexturedModel (desertHex, new ModelTexture(loader.loadTexture("Desert"))),
-				new TexturedModel (road, new ModelTexture(loader.loadTexture("Desert"))),
-				new TexturedModel (village, new ModelTexture(loader.loadTexture("Desert"))),
-				new TexturedModel (city, new ModelTexture(loader.loadTexture("Desert")))
+				new TexturedModel (road, new ModelTexture(loader.loadTexture("piece"))),
+				new TexturedModel (village, new ModelTexture(loader.loadTexture("piece"))),
+				new TexturedModel (city, new ModelTexture(loader.loadTexture("piece")))
 			};
 		
 		resourceModels = models;

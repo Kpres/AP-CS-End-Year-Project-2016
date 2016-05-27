@@ -1,4 +1,4 @@
-package world;
+package entities;
 
 public abstract class Resource {
 	

@@ -1,16 +1,9 @@
-package world;
+package entities;
 
 import org.lwjgl.util.vector.Vector3f;
 
 import engine.Updatable;
-import entities.Entity;
 
-/**
- * Abstract class GamePiece - write a description of the class here
- * 
- * @author (your name here)
- * @version (version number or date here)
- */
 public abstract class GamePiece implements Updatable
 {
 	private final int id;

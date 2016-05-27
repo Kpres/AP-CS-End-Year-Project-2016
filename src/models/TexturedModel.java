@@ -1,9 +1,9 @@
 package models;
 
-	import models.RawModel;
 import textures.ModelTexture;
 
 public class TexturedModel {
+	
 	private RawModel rawModel;
 	private ModelTexture texture;
 

@@ -5,18 +5,18 @@ import java.util.List;
 
 import org.lwjgl.opengl.Display;
 
-import models.ResourceModels;
+import entities.Brick;
+import entities.Desert;
+import entities.Resource;
+import entities.Rock;
+import entities.Sheep;
+import entities.Wheat;
+import entities.Wood;
+import models.ModelAssets;
 import render.Loader;
 import render.Renderer;
 import render.Window;
 import shaders.StaticShader;
-import world.Brick;
-import world.Desert;
-import world.Resource;
-import world.Rock;
-import world.Sheep;
-import world.Wheat;
-import world.Wood;
 import world.World;
 
 public class GameEngine {
@@ -34,7 +34,7 @@ public class GameEngine {
 		renderer = new Renderer();
 		loader = new Loader();
 
-		ResourceModels.createModels(loader);
+		ModelAssets.createModels(loader);
 		
 		List<Resource> resourceList = new ArrayList<Resource>();
 		for (int i = 0; i < 4; i++) {

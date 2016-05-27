@@ -1,34 +1,15 @@
 package world;
 
-/**
- * Write a description of class City here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
- */
 public class City extends GamePiece
 {
-    // instance variables - replace the example below with your own
-    private int x;
+	
+	public City() {
+		super(8);
+	}
 
-    /**
-     * Constructor for objects of class City
-     */
-    public City()
-    {
-        // initialise instance variables
-        x = 0;
-    }
-
-    /**
-     * An example of a method - replace this comment with your own
-     * 
-     * @param  y   a sample parameter for a method
-     * @return     the sum of x and y 
-     */
-    public int sampleMethod(int y)
-    {
-        // put your code here
-        return x + y;
-    }
+	@Override
+	public void update() {
+		// TODO Auto-generated method stub
+		
+	}
 }

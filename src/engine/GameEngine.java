@@ -5,17 +5,11 @@ import java.util.List;
 
 import org.lwjgl.opengl.Display;
 
-import entities.Camera;
-import models.RawModel;
 import models.ResourceModels;
-import models.TexturedModel;
 import render.Loader;
-import render.OBJLoader;
 import render.Renderer;
 import render.Window;
 import shaders.StaticShader;
-import input.MousePicker;
-import textures.ModelTexture;
 import world.Brick;
 import world.Desert;
 import world.Resource;
@@ -31,36 +25,15 @@ public class GameEngine {
 	Renderer renderer; 
 	Loader loader;
 	
-	Camera camera;
-	MousePicker mousePicker;
 	World world;
 	
 	public GameEngine()
 	{
 		Window.createDisplay();
 		shader = new StaticShader();
-		renderer = new Renderer(shader);
+		renderer = new Renderer();
 		loader = new Loader();
-		
-		//Cameras
-		camera = new Camera();
-		mousePicker = new MousePicker(camera, renderer.getProjectionMatrix());
-		
-		RawModel woodHex = OBJLoader.loadObjModel("hex", loader);
-		RawModel wheatHex = OBJLoader.loadObjModel("hex", loader);
-		RawModel brickHex = OBJLoader.loadObjModel("hex", loader);
-		RawModel sheepHex = OBJLoader.loadObjModel("hex", loader);
-		RawModel rockHex = OBJLoader.loadObjModel("hex", loader);
-		RawModel desertHex = OBJLoader.loadObjModel("hex", loader);
-		
-		TexturedModel[] temp = {
-				new TexturedModel (woodHex, new ModelTexture(loader.loadTexture("Wood"))),
-				new TexturedModel (wheatHex, new ModelTexture(loader.loadTexture("Wheat"))),
-				new TexturedModel (brickHex, new ModelTexture(loader.loadTexture("Brick"))),
-				new TexturedModel (sheepHex, new ModelTexture(loader.loadTexture("Sheep"))),
-				new TexturedModel (rockHex, new ModelTexture(loader.loadTexture("Rock"))),
-				new TexturedModel (desertHex, new ModelTexture(loader.loadTexture("Desert")))
-			};
+
 		ResourceModels.createModels(loader);
 		
 		List<Resource> resourceList = new ArrayList<Resource>();
@@ -74,7 +47,7 @@ public class GameEngine {
 			}
 		}
 		resourceList.add(new Desert());
-		world = new World(resourceList);
+		world = new World(this, resourceList);
 		
 	}
 	public void start()
@@ -92,27 +65,26 @@ public class GameEngine {
 
 	private void gameLoop() {
 		
-		camera.position.y = 5.5f;
-		camera.position.z = 6.0f;
-		shader.start();
 		
 		while(!Display.isCloseRequested()){	
+			world.update();
 			
 			renderer.prepare();
-			
-			camera.move();
-			shader.loadViewMatrix(camera);	
-			mousePicker.update();
-			Display.setTitle(mousePicker.getRay() + "");
 			
 			world.render(renderer, shader);
 			
 			Window.updateDisplay();
 		}
-		
-		shader.stop();
 	}
 
 	private void init(){
+	}
+	
+	public Loader getLoader() {
+		return loader;
+	}
+	
+	public Renderer getRenderer() {
+		return renderer;
 	}
 }

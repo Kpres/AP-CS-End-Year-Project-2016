@@ -1,34 +1,37 @@
 package world;
 
-/**
- * Write a description of class Road here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
- */
-public class Road extends GamePiece
-{
-    // instance variables - replace the example below with your own
-    private int x;
+public class Road extends GamePiece {
+	
+	public Road() {
+		super(6);
+	}
 
-    /**
-     * Constructor for objects of class Road
-     */
-    public Road()
-    {
-        // initialise instance variables
-        x = 0;
-    }
-
-    /**
-     * An example of a method - replace this comment with your own
-     * 
-     * @param  y   a sample parameter for a method
-     * @return     the sum of x and y 
-     */
-    public int sampleMethod(int y)
-    {
-        // put your code here
-        return x + y;
-    }
+	public void update() {
+		float x = this.position.x;
+		float z = this.position.z;
+		
+		if (Math.abs(x) % 3 >= 1 && Math.abs(x) % 3 <= 2) {
+			float rt3 = (float) Math.sqrt(3);
+			ry = 60;
+			
+			if ((int) (Math.abs(x) + 1) % 2 != 0) {
+				ry = -ry;
+			}
+			if ((int) ((Math.abs(z) / rt3)) % 2 != 0) {
+				ry = -ry;
+			}
+			
+			if (z > 0) {
+				if (x < 0) {
+					ry = -ry;
+				}
+			} else {
+				if (x > 0) {
+					ry = -ry;
+				}
+			}
+		} else {
+			ry = 0;
+		}
+	}
 }

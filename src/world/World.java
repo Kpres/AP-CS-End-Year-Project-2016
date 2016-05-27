@@ -3,13 +3,17 @@ package world;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.lwjgl.opengl.Display;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
-import shaders.StaticShader;
+import engine.GameEngine;
+import entities.Camera;
 import entities.Entity;
+import input.MousePicker;
 import models.ResourceModels;
 import render.Renderer;
+import shaders.StaticShader;
 
 public class World {
     
@@ -19,28 +23,43 @@ public class World {
     private static final double[] xPositions = new double[numResources(rings)];
     private static final double[] yPositions = new double[numResources(rings)];
     
+    Camera camera;
+    MousePicker mousePicker;
+    
     List<Resource> resources;
     List<Entity> entities;
     PieceManager pieceManager;
     
-    public World() {
+    public World(GameEngine gameEngine) {
     	setPositions();
+    	
+    	camera = new Camera();
+    	camera.position.y = 5.5f;
+		camera.position.z = 6.0f;
+    	mousePicker = new MousePicker(camera, gameEngine.getRenderer().getProjectionMatrix());
     	
     	resources = new ArrayList<Resource>();
     	entities = new ArrayList<Entity>();
         pieceManager = new PieceManager();
         
         shuffleResources();
+        createPieces();
     }
     
-    public World(List<Resource> resources) {
+    public World(GameEngine gameEngine, List<Resource> resources) {
     	setPositions();
+    	
+    	camera = new Camera();
+    	camera.position.y = 5.5f;
+		camera.position.z = 6.0f;
+    	mousePicker = new MousePicker(camera, gameEngine.getRenderer().getProjectionMatrix());
     	
         this.resources = resources;
         entities = new ArrayList<Entity>();
         pieceManager = new PieceManager();
         
         shuffleResources();
+        createPieces();
     }
     
     private static void setPositions() {
@@ -107,6 +126,28 @@ public class World {
 			entities.add(new Entity(ResourceModels.getModel(resources.get(i).getId()), new Vector3f(pos.x, 0, pos.y), 0, 0, 0, 1));
     	}
     }
+    
+    private void createPieces() {
+    	float x = 8;
+    	float z = -8;
+    	for (int i = 0; i < 10; i++) {
+    		Road road = new Road();
+    		Settlement settlement = new Settlement();
+    		City city = new City();
+    		
+    		road.setPos(new Vector3f(x, 0, z));
+    		z-=2;
+    		settlement.setPos(new Vector3f(x, 0, z));
+    		z-=2;
+    		city.setPos(new Vector3f(x, 0, z));
+    		z-=2;
+    		x+=2;
+    		
+	    	pieceManager.addPiece(road);
+	    	pieceManager.addPiece(settlement);
+	    	pieceManager.addPiece(city);
+    	}
+    }
 
     public static int numResources(int rings) {
         int sum = 1;
@@ -130,7 +171,17 @@ public class World {
         return resources.remove(index);
     }
     
+    public void update() {
+    	camera.move();
+    	
+    	mousePicker.update();
+		Display.setTitle(mousePicker.getRay() + "");
+		
+		pieceManager.update(mousePicker, camera);
+    }
+    
     public void render(Renderer renderer, StaticShader shader) {
-    	for (Entity e : entities) renderer.render(e, shader);
+    	for (Entity e : entities) renderer.render(e, shader, camera);
+    	pieceManager.render(renderer, shader, camera);
     }
 }

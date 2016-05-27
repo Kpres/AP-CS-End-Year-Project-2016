@@ -15,6 +15,9 @@ public class ResourceModels {
 	public static final int SHEEP_MODEL = 3;
 	public static final int ROCK_MODEL = 4;
 	public static final int DESERT_MODEL = 5;
+	public static final int ROAD_MODEL = 6;
+	public static final int VILLAGE_MODEL = 7;
+	public static final int CITY_MODEL = 8;
 	
 	public static void createModels(Loader loader) {
 		RawModel woodHex = OBJLoader.loadObjModel("hex", loader);
@@ -23,6 +26,9 @@ public class ResourceModels {
 		RawModel sheepHex = OBJLoader.loadObjModel("hex", loader);
 		RawModel rockHex = OBJLoader.loadObjModel("hex", loader);
 		RawModel desertHex = OBJLoader.loadObjModel("hex", loader);
+		RawModel road = OBJLoader.loadObjModel("road", loader);
+		RawModel village = OBJLoader.loadObjModel("hex", loader);
+		RawModel city = OBJLoader.loadObjModel("hex", loader);
 		
 		TexturedModel[] models = {
 				new TexturedModel (woodHex, new ModelTexture(loader.loadTexture("Wood"))),
@@ -30,8 +36,12 @@ public class ResourceModels {
 				new TexturedModel (brickHex, new ModelTexture(loader.loadTexture("Brick"))),
 				new TexturedModel (sheepHex, new ModelTexture(loader.loadTexture("Sheep"))),
 				new TexturedModel (rockHex, new ModelTexture(loader.loadTexture("Rock"))),
-				new TexturedModel (desertHex, new ModelTexture(loader.loadTexture("Desert")))
+				new TexturedModel (desertHex, new ModelTexture(loader.loadTexture("Desert"))),
+				new TexturedModel (road, new ModelTexture(loader.loadTexture("Desert"))),
+				new TexturedModel (village, new ModelTexture(loader.loadTexture("Desert"))),
+				new TexturedModel (city, new ModelTexture(loader.loadTexture("Desert")))
 			};
+		
 		resourceModels = models;
 	}
 	

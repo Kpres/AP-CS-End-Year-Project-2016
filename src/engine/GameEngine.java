@@ -77,7 +77,8 @@ public class GameEngine {
 		}
 	}
 
-	private void init(){
+	private void init() {
+		Display.setTitle("Settlers of Catan");
 	}
 	
 	public Loader getLoader() {

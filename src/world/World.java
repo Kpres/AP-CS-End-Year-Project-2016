@@ -3,7 +3,6 @@ package world;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.lwjgl.opengl.Display;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
@@ -178,7 +177,6 @@ public class World {
     	camera.move();
     	
     	mousePicker.update();
-		Display.setTitle(mousePicker.getRay() + "");
 		
 		pieceManager.update(mousePicker, camera);
     }
